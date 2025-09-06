@@ -30,9 +30,14 @@ export const authApi = {
 
 // Project API calls
 export const projectApi = {
-    getProjects: () => api.get('/projects'),
+    getProjects: () => 
+        api.get('/projects'),
     createProject: (data: {name: string, description?: string}) => 
         api.post('/projects', data),
+    updateProject: (id: string, data: {name: string; description?: string}) =>
+        api.put(`/projects/${id}`, data),
+    deleteProject: (id: string) => 
+        api.delete(`/projects/${id}`),
 };
 
 // Task API calls
