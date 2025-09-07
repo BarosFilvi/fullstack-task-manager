@@ -5,15 +5,16 @@ import { projectApi } from "@/lib/api";
 import { Project } from "@/types";
 import { useToast } from "@/contexts/toastContext";
 import EditProjectModal from "./EditProjectModal";
-import ConfirmDialog from "./ComfirmDialog";
+import ConfirmDialog from "./ConfirmDialog";
 
 export interface ProjectListProps {
     refreshTrigger: number;
     onRefresh: () => void;
     onProjectsCountChange?: (count: number) => void;
+    onProjectSelect?: (projectId: string, projectName: string) => void;
 }
 
-export default function ProjectList({ refreshTrigger, onRefresh, onProjectsCountChange }: ProjectListProps) {
+export default function ProjectList({ refreshTrigger, onRefresh, onProjectsCountChange, onProjectSelect }: ProjectListProps) {
     const [projects, setProjects] = useState<Project[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
@@ -98,12 +99,19 @@ export default function ProjectList({ refreshTrigger, onRefresh, onProjectsCount
             ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {projects.map((project) => (
-                <div key={project._id} className="bg-white p-6 rounded-lg shadow relative">
+                <div 
+                    key={project._id} 
+                    className="bg-white p-6 rounded-lg shadow relative cursor-pointer hover:shadow-md transition-shadow"
+                    onClick={() => onProjectSelect && onProjectSelect(project._id, project.name)}
+                >
                     {/* Buttons container */}
                     <div className="absolute top-4 right-4 flex space-x-2">
                     {/* Edit Button */}
                     <button
-                        onClick={() => handleEdit(project)}
+                        onClick={(e) => {
+                            e.stopPropagation();  // Prevent triggering onProjectSelect
+                            handleEdit(project);
+                        }}
                         className="text-blue-600 hover:text-blue-800 p-1 rounded hover:bg-blue-50"
                         title="Edit project"
                     >
@@ -114,7 +122,10 @@ export default function ProjectList({ refreshTrigger, onRefresh, onProjectsCount
 
                     {/* Delete Button */}
                     <button
-                        onClick={() => handleDeleteClick(project)}
+                        onClick={(e) => {
+                            e.stopPropagation();  // Prevent triggering onProjectSelect
+                            handleDeleteClick(project);
+                        }}
                         className="text-red-600 hover:text-red-800 p-1 rounded hover:bg-red-50"
                         title="Delete project"
                     >
