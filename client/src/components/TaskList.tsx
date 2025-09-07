@@ -5,7 +5,7 @@ import { Task } from '@/types';
 import { taskApi } from '@/lib/api';
 import { useToast } from '@/contexts/toastContext';
 import EditTaskModal from './EditTaskModal';
-import ConfirmDialog from './ComfirmDialog';
+import ConfirmDialog from './ConfirmDialog';
 
 interface TaskListProps {
   projectId: string;

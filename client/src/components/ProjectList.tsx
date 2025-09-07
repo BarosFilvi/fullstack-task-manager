@@ -5,7 +5,7 @@ import { projectApi } from "@/lib/api";
 import { Project } from "@/types";
 import { useToast } from "@/contexts/toastContext";
 import EditProjectModal from "./EditProjectModal";
-import ConfirmDialog from "./ComfirmDialog";
+import ConfirmDialog from "./ConfirmDialog";
 
 export interface ProjectListProps {
     refreshTrigger: number;
@@ -108,7 +108,10 @@ export default function ProjectList({ refreshTrigger, onRefresh, onProjectsCount
                     <div className="absolute top-4 right-4 flex space-x-2">
                     {/* Edit Button */}
                     <button
-                        onClick={() => handleEdit(project)}
+                        onClick={(e) => {
+                            e.stopPropagation();  // Prevent triggering onProjectSelect
+                            handleEdit(project);
+                        }}
                         className="text-blue-600 hover:text-blue-800 p-1 rounded hover:bg-blue-50"
                         title="Edit project"
                     >
@@ -119,7 +122,10 @@ export default function ProjectList({ refreshTrigger, onRefresh, onProjectsCount
 
                     {/* Delete Button */}
                     <button
-                        onClick={() => handleDeleteClick(project)}
+                        onClick={(e) => {
+                            e.stopPropagation();  // Prevent triggering onProjectSelect
+                            handleDeleteClick(project);
+                        }}
                         className="text-red-600 hover:text-red-800 p-1 rounded hover:bg-red-50"
                         title="Delete project"
                     >

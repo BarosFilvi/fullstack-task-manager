@@ -34,7 +34,7 @@ export default function DashboardPage() {
     if (user) {
       fetchGlobalTasksStats();
     }
-  }, [user])
+  }, [user, tasksRefreshTrigger]);
 
   if (loading) {
     return (
@@ -47,10 +47,6 @@ export default function DashboardPage() {
   if (!user) {
     return null;
   }
-
-  const handleRefresh = () => {
-    setRefreshTrigger(prev => prev + 1);
-  };
 
   const handleProjectsCountChange = (count: number) => {
     setProjectsCount(count);
@@ -71,11 +67,6 @@ export default function DashboardPage() {
     setSelectedProjectName('');
   };
 
-  // refresh tasks when a task is created or updated
-  const handleTasksRefresh = () => {
-    setTasksRefreshTrigger(prev => prev + 1);
-  }
-
   // fetch global tasks stats
   const fetchGlobalTasksStats = async () => {
     try {
@@ -90,6 +81,7 @@ export default function DashboardPage() {
   // Call this to refresh global stats after task updates
   const handleRefreshGlobalStats = () => {
     fetchGlobalTasksStats();
+    setRefreshTrigger(prev => prev + 1);
     setTasksRefreshTrigger(prev => prev + 1);
   }
 
@@ -196,13 +188,13 @@ export default function DashboardPage() {
                 <div className="lg:col-span-2">
                   <ProjectList 
                     refreshTrigger={refreshTrigger}
-                    onRefresh={handleRefresh}
+                    onRefresh={handleRefreshGlobalStats}
                     onProjectsCountChange={handleProjectsCountChange}
                     onProjectSelect={handleProjectSelect}
                   />
                 </div>
                 <div>
-                  <CreateProjectForm onProjectCreated={handleRefresh} />
+                  <CreateProjectForm onProjectCreated={handleRefreshGlobalStats} />
                 </div>
               </div>
             </div>

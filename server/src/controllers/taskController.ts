@@ -76,7 +76,7 @@ export const updateTask = async (
     const { id } = req.params;
     const { title, description, status, priority, dueDate } = req.body;
 
-    const task = await Task.findByIdAndUpdate(
+    const task = await Task.findOneAndUpdate(
       { _id: id, owner: req.user!._id },
       { title, description, status, priority, dueDate },
       { new: true, runValidators: true }

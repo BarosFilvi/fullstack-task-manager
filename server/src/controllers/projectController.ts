@@ -48,7 +48,7 @@ export const updateProject = async (req: AuthenticatedRequest, res: Response): P
         const { id } = req.params;
         const { name, description } = req.body;
 
-        const project = await Project.findByIdAndUpdate(
+        const project = await Project.findOneAndUpdate(
             { _id: id, owner: req.user!._id },
             { name, description },
             { new: true, runValidators: true }
