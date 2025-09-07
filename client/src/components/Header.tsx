@@ -11,7 +11,7 @@ export default function Header() {
     <header className="bg-white shadow">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center py-6">
-          <Link href="/dashboard" className="text-xl font-bold text-gray-900">
+          <Link href="/" className="text-xl font-bold text-gray-900">
             Task Manager
           </Link>
           
@@ -21,17 +21,17 @@ export default function Header() {
                 <span className="text-gray-700">Hello, {user.name}</span>
                 <button
                   onClick={logout}
-                  className="text-gray-600 hover:text-gray-900"
+                  className="text-blue-600 hover:text-gray-900 cursor-pointer"
                 >
                   Logout
                 </button>
               </>
             ) : (
               <>
-                <Link href="/login" className="text-gray-600 hover:text-gray-900">
+                <Link href="/login" className="text-gray-800 hover:text-blue-600">
                   Login
                 </Link>
-                <Link href="/register" className="text-gray-600 hover:text-gray-900">
+                <Link href="/register" className="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded-lg">
                   Register
                 </Link>
               </>
