@@ -52,4 +52,20 @@ export const taskApi = {
         dueDate?: string;
         projectId: string;
     }) => api.post('/tasks', data),
+    updateTask: (
+        id: string,
+        data: {
+            title?: string;
+            description?: string;
+            status?: string;
+            priority?: string;
+            dueDate?: string;
+            projectId?: string;
+        }
+    ) => 
+        api.put(`/tasks/${id}`, data),
+    deleteTask: (id: string) =>
+        api.delete(`/tasks/${id}`),
+    getUserTasksStats: () =>
+        api.get('/tasks/stats/user'),
 };
