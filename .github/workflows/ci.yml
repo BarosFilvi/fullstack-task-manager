@@ -2,7 +2,7 @@ name: CI/CD Pipeline
 
 on:
   push:
-    branches: [ "main", "devops-migration" ]
+    branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
 
@@ -19,4 +19,4 @@ jobs:
 
     - name: Build Docker Images
       run: |
-        docker-compose build
+        docker compose build
